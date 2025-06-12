@@ -1,4 +1,4 @@
-// ← この1行を一番上に追加
+// ← この1行を一番上に追加します
 export const anniversaries = {
   "01/01": { title: "がんじつ", description: "おしょうがつをいわう日です。" },
   "01/02": { title: "はつゆめの日", description: "ゆめでことしをうらないます。" },
