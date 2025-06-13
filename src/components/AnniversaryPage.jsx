@@ -1,33 +1,15 @@
-import React, { useState, useContext, createContext } from "react";
+import React from "react";
+import { useSettings } from "./SettingsPage";
 import { anniversaries } from "../data/anniversaries";
 import illustrationMap from "../data/illustrations";
-import { Link, useNavigate } from "react-router-dom";
-
-const SettingsContext = createContext();
-
-export function SettingsProvider({ children }) {
-  const [showImage, setShowImage] = useState(true);
-  const [fontSize, setFontSize] = useState("text-lg");
-
-  return (
-    <SettingsContext.Provider value={{ showImage, setShowImage, fontSize, setFontSize }}>
-      {children}
-    </SettingsContext.Provider>
-  );
-}
-
-export function useSettings() {
-  return useContext(SettingsContext);
-}
+import { Link } from "react-router-dom";
 
 export default function AnniversaryPage({ date }) {
+  console.log("📅 date =", date); // デバッグ用出力
+
   const anniversary = anniversaries[date];
   const illustration = illustrationMap[date];
   const { showImage, setShowImage, fontSize, setFontSize } = useSettings();
-  const navigate = useNavigate();
-
-  console.log("📅 date =", date);
-  console.log("🎉 anniversary data =", anniversary);
 
   const handleFontSizeChange = (e) => {
     setFontSize(e.target.value);
@@ -35,8 +17,8 @@ export default function AnniversaryPage({ date }) {
 
   return (
     <div className="text-center p-6 bg-gradient-to-b from-yellow-100 to-blue-100 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-pink-700">今日はなんの日？</h1>
-      <div className="text-xl mb-4 text-gray-800">{date}</div>
+      <h1 className="text-3xl font-bold mb-6 text-pink-700">にっちょくアプリ</h1>
+      <div className="text-xl mb-4 text-gray-800">date = {date}</div>
       {anniversary ? (
         <div className={`border rounded-xl p-4 bg-white shadow-lg ${fontSize}`}>
           <h2 className="text-2xl font-semibold mb-2 text-green-700">{anniversary.title}</h2>
