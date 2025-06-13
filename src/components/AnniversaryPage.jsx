@@ -9,7 +9,7 @@ export default function AnniversaryPage({ date }) {
   const anniversary = anniversaries[date];
   const illustration = illustrationMap[date];
 
-  console.log("📅 date =", date);
+  console.log("📅 date =", date, typeof date);
 
   return (
     <div className="text-center p-6 bg-gradient-to-b from-yellow-100 to-blue-100 min-h-screen">
