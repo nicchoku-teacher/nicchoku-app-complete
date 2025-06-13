@@ -1,20 +1,42 @@
-import React from "react";
+import React, { useState, useContext, createContext } from "react";
 import { anniversaries } from "../data/anniversaries";
 import illustrationMap from "../data/illustrations";
-import { useSettings } from "./SettingsPage";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+const SettingsContext = createContext();
+
+export function SettingsProvider({ children }) {
+  const [showImage, setShowImage] = useState(true);
+  const [fontSize, setFontSize] = useState("text-lg");
+
+  return (
+    <SettingsContext.Provider value={{ showImage, setShowImage, fontSize, setFontSize }}>
+      {children}
+    </SettingsContext.Provider>
+  );
+}
+
+export function useSettings() {
+  return useContext(SettingsContext);
+}
 
 export default function AnniversaryPage({ date }) {
-  const normalizedDate = date?.toString().padStart(5, "0"); // "6/13" -> "06/13"
-  const anniversary = anniversaries[normalizedDate];
-  const illustration = illustrationMap[normalizedDate];
-  const { showImage, fontSize } = useSettings();
+  const anniversary = anniversaries[date];
+  const illustration = illustrationMap[date];
+  const { showImage, setShowImage, fontSize, setFontSize } = useSettings();
+  const navigate = useNavigate();
+
+  console.log("📅 date =", date);
+  console.log("🎉 anniversary data =", anniversary);
+
+  const handleFontSizeChange = (e) => {
+    setFontSize(e.target.value);
+  };
 
   return (
     <div className="text-center p-6 bg-gradient-to-b from-yellow-100 to-blue-100 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-pink-700">にっちょくアプリ</h1>
-      <div className="text-xl mb-4 text-gray-800">date = {normalizedDate}</div>
-
+      <h1 className="text-3xl font-bold mb-6 text-pink-700">今日はなんの日？</h1>
+      <div className="text-xl mb-4 text-gray-800">{date}</div>
       {anniversary ? (
         <div className={`border rounded-xl p-4 bg-white shadow-lg ${fontSize}`}>
           <h2 className="text-2xl font-semibold mb-2 text-green-700">{anniversary.title}</h2>
@@ -30,6 +52,25 @@ export default function AnniversaryPage({ date }) {
       ) : (
         <p className="text-lg text-red-600">今日はなんの日か見つかりませんでした。</p>
       )}
+
+      <div className="mt-6 space-x-4">
+        <button
+          onClick={() => setShowImage(!showImage)}
+          className="px-4 py-2 bg-green-500 text-white rounded-xl shadow hover:bg-green-600"
+        >
+          {showImage ? "イラストをかくす" : "イラストをひょうじ"}
+        </button>
+
+        <select
+          value={fontSize}
+          onChange={handleFontSizeChange}
+          className="px-2 py-1 rounded border shadow text-gray-700"
+        >
+          <option value="text-sm">小</option>
+          <option value="text-lg">中</option>
+          <option value="text-xl">大</option>
+        </select>
+      </div>
 
       <div className="mt-6 flex flex-wrap justify-center gap-4">
         <Link to="/" className="px-4 py-2 bg-blue-500 text-white rounded-xl shadow hover:bg-blue-600">
