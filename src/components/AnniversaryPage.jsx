@@ -1,30 +1,20 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { anniversaries } from "../data/anniversaries";
 import illustrationMap from "../data/illustrations";
 import { useSettings } from "./SettingsPage";
+import { Link } from "react-router-dom";
 
 export default function AnniversaryPage({ date }) {
-  const navigate = useNavigate();
+  const normalizedDate = date?.toString().padStart(5, "0"); // "6/13" -> "06/13"
+  const anniversary = anniversaries[normalizedDate];
+  const illustration = illustrationMap[normalizedDate];
   const { showImage, fontSize } = useSettings();
-
-  // MM/DD形式に整える
-  const formatDate = (d) => {
-    if (!d) return "";
-    const [m, d2] = d.split("/");
-    const mm = m.padStart(2, "0");
-    const dd = d2.padStart(2, "0");
-    return `${mm}/${dd}`;
-  };
-
-  const formattedDate = formatDate(date);
-  const anniversary = anniversaries[formattedDate];
-  const illustration = illustrationMap[formattedDate];
 
   return (
     <div className="text-center p-6 bg-gradient-to-b from-yellow-100 to-blue-100 min-h-screen">
       <h1 className="text-3xl font-bold mb-6 text-pink-700">にっちょくアプリ</h1>
-      <div className="text-xl mb-4 text-gray-800">date = {formattedDate}</div>
+      <div className="text-xl mb-4 text-gray-800">date = {normalizedDate}</div>
+
       {anniversary ? (
         <div className={`border rounded-xl p-4 bg-white shadow-lg ${fontSize}`}>
           <h2 className="text-2xl font-semibold mb-2 text-green-700">{anniversary.title}</h2>
@@ -42,24 +32,21 @@ export default function AnniversaryPage({ date }) {
       )}
 
       <div className="mt-6 flex flex-wrap justify-center gap-4">
-        <button
-          onClick={() => navigate("/weather")}
-          className="px-4 py-2 bg-yellow-500 text-white rounded-xl shadow hover:bg-yellow-600"
-        >
-          つぎへ（てんき）
-        </button>
-        <button
-          onClick={() => navigate("/genki")}
-          className="px-4 py-2 bg-pink-500 text-white rounded-xl shadow hover:bg-pink-600"
-        >
-          つぎへ（げんき）
-        </button>
-        <button
-          onClick={() => navigate("/settings")}
-          className="px-4 py-2 bg-gray-700 text-white rounded-xl shadow hover:bg-gray-800"
-        >
+        <Link to="/" className="px-4 py-2 bg-blue-500 text-white rounded-xl shadow hover:bg-blue-600">
+          ホームにもどる
+        </Link>
+        <Link to="/date" className="px-4 py-2 bg-indigo-500 text-white rounded-xl shadow hover:bg-indigo-600">
+          日付ページへ
+        </Link>
+        <Link to="/weather" className="px-4 py-2 bg-yellow-500 text-white rounded-xl shadow hover:bg-yellow-600">
+          てんきページへ
+        </Link>
+        <Link to="/genki" className="px-4 py-2 bg-pink-500 text-white rounded-xl shadow hover:bg-pink-600">
+          げんきメーターへ
+        </Link>
+        <Link to="/settings" className="px-4 py-2 bg-gray-600 text-white rounded-xl shadow hover:bg-gray-700">
           設定ページ
-        </button>
+        </Link>
       </div>
     </div>
   );
