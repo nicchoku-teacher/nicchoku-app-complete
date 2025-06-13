@@ -1,3 +1,4 @@
+
 import React, { useContext } from "react";
 import { anniversaries } from "../data/anniversaries";
 import illustrationMap from "../data/illustrations";
@@ -34,7 +35,7 @@ export default function AnniversaryPage({ date }) {
           )}
         </div>
       ) : (
-        <p>今日はなんの日か見つかりませんでした。</p>
+        <p className="text-gray-600">今日はなんの日か見つかりませんでした。</p>
       )}
     </div>
   );
