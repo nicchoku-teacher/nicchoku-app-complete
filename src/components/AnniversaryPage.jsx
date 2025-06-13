@@ -1,4 +1,3 @@
-
 import React, { useContext } from "react";
 import { anniversaries } from "../data/anniversaries";
 import illustrationMap from "../data/illustrations";
@@ -11,32 +10,30 @@ function formatDate(date) {
 }
 
 export default function AnniversaryPage({ date }) {
-  const { showImage, setShowImage, fontSize, setFontSize } = useContext(SettingsContext);
-
-  const fixedDate = formatDate(date);
-  const anniversary = anniversaries[fixedDate];
-  const illustration = illustrationMap[fixedDate];
+  const formattedDate = formatDate(date);
+  const anniversary = anniversaries[formattedDate];
+  const { showIllustration } = useContext(SettingsContext);
 
   return (
-    <div className="text-center p-6 bg-gradient-to-b from-yellow-100 to-blue-100 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-pink-700">にっちょくアプリ</h1>
-      <div className="text-xl mb-4 text-gray-800">date = {fixedDate}</div>
-
+    <div style={{ textAlign: "center", padding: "20px" }}>
+      <h1>にっちょくアプリ</h1>
+      <p>date = {formattedDate}</p>
       {anniversary ? (
-        <div className={`border rounded-xl p-4 bg-white shadow-lg ${fontSize}`}>
-          <h2 className="text-2xl font-semibold mb-2 text-green-700">{anniversary.title}</h2>
-          <p className="mb-4 text-gray-700">{anniversary.description}</p>
-          {showImage && illustration && (
+        <>
+          <h2>{anniversary.title}</h2>
+          <p>{anniversary.description}</p>
+          {showIllustration && illustrationMap[formattedDate] && (
             <img
-              src={illustration}
-              alt="記念日のイラスト"
-              className="mx-auto max-w-xs rounded-lg shadow-md border border-yellow-300"
+              src={illustrationMap[formattedDate]}
+              alt={anniversary.title}
+              style={{ maxWidth: "100%", height: "auto" }}
             />
           )}
-        </div>
+        </>
       ) : (
-        <p className="text-gray-600">今日はなんの日か見つかりませんでした。</p>
+        <p>今日はなんの日か見つかりませんでした。</p>
       )}
+      <Link to="/">トップにもどる</Link>
     </div>
   );
 }
