@@ -1,24 +1,21 @@
-import React from "react";
-import { useSettings } from "./SettingsPage";
+import React, { useContext } from "react";
 import { anniversaries } from "../data/anniversaries";
 import illustrationMap from "../data/illustrations";
 import { Link } from "react-router-dom";
+import { SettingsContext } from "./SettingsPage";
 
 export default function AnniversaryPage({ date }) {
-  console.log("📅 date =", date); // デバッグ用出力
-
+  const { showImage, setShowImage, fontSize, setFontSize } = useContext(SettingsContext);
   const anniversary = anniversaries[date];
   const illustration = illustrationMap[date];
-  const { showImage, setShowImage, fontSize, setFontSize } = useSettings();
 
-  const handleFontSizeChange = (e) => {
-    setFontSize(e.target.value);
-  };
+  console.log("📅 date =", date);
 
   return (
     <div className="text-center p-6 bg-gradient-to-b from-yellow-100 to-blue-100 min-h-screen">
       <h1 className="text-3xl font-bold mb-6 text-pink-700">にっちょくアプリ</h1>
       <div className="text-xl mb-4 text-gray-800">date = {date}</div>
+
       {anniversary ? (
         <div className={`border rounded-xl p-4 bg-white shadow-lg ${fontSize}`}>
           <h2 className="text-2xl font-semibold mb-2 text-green-700">{anniversary.title}</h2>
@@ -45,7 +42,7 @@ export default function AnniversaryPage({ date }) {
 
         <select
           value={fontSize}
-          onChange={handleFontSizeChange}
+          onChange={(e) => setFontSize(e.target.value)}
           className="px-2 py-1 rounded border shadow text-gray-700"
         >
           <option value="text-sm">小</option>
