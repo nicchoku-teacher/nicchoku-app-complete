@@ -34,14 +34,8 @@ export default function AnniversaryPage({ date }) {
           )}
         </div>
       ) : (
-        <p className="text-red-500 text-lg">今日はなんの日か見つかりませんでした。</p>
+        <p>今日はなんの日か見つかりませんでした。</p>
       )}
-
-      <div className="mt-6">
-        <Link to="/" className="text-blue-600 underline">
-          ホームにもどる
-        </Link>
-      </div>
     </div>
   );
 }
