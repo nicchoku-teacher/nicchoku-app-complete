@@ -12,6 +12,8 @@ function formatDate(date) {
 export default function AnniversaryPage({ date }) {
   const formattedDate = formatDate(date);
   console.log("確認用：formattedDate =", formattedDate);
+　console.log("確認用: anniversaries[06/14] =", anniversaries["06/14"]);
+  console.log("確認用: anniversaries[formattedDate] =", anniversaries[formattedDate]);
   const anniversary = anniversaries[formattedDate];
   const { showIllustration } = useContext(SettingsContext);
   return (
