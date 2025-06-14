@@ -12,7 +12,6 @@ export default function App() {
         <Routes>
           <Route path="/anniversary" element={<AnniversaryPage date={getToday()} />} />
           <Route path="/settings" element={<SettingsPage />} />
-         // <Route path="*" element={<DatePage />} />
         </Routes>
       </Router>
     </SettingsProvider>
