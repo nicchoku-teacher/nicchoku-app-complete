@@ -11,9 +11,9 @@ function formatDate(date) {
 
 export default function AnniversaryPage({ date }) {
   const formattedDate = formatDate(date);
+  console.log("確認用：formattedDate =", formattedDate);
   const anniversary = anniversaries[formattedDate];
   const { showIllustration } = useContext(SettingsContext);
-
   return (
     <div style={{ textAlign: "center", padding: "20px" }}>
       <h1>にっちょくアプリ</h1>
