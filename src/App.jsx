@@ -1,7 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import DatePage from "./components/DatePage";
-import WeatherPage from "./components/WeatherPage";
-import GenkiPage from "./components/GenkiPage";
 import AnniversaryPage from "./components/AnniversaryPage";
 import SettingsPage from "./components/SettingsPage";
 import NavBar from "./components/NavBar";
@@ -13,9 +10,6 @@ export default function App() {
       <Router>
         <NavBar />
         <Routes>
-          <Route path="/date" element={<DatePage />} />
-          <Route path="/weather" element={<WeatherPage />} />
-          <Route path="/genki" element={<GenkiPage />} />
           <Route path="/anniversary" element={<AnniversaryPage date={getToday()} />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="*" element={<DatePage />} />
